@@ -1,0 +1,48 @@
+
+what is passport?
+
+a middlware that is used to handle authentication, using strategies.
+strategies like (google, facebook, & github) in our case we used google and github.
+
+
+passport-github2 --> is an example strategy for github authentication, allowing to use OAuth 2.0
+to authenticate users via theit github account.
+how is this useful? it's a third party that allows app to access user's data without
+sharing their password.
+
+- connect to the github application using clientID and Secret.
+
+
+CallbackURL --> the url the user is redirected to after authentication  (the endpoint that handles the response after authentication).
+
+
+parameters returned to the endpoint --> access token, refresh token, profile, done.
+
+
+#######################################
+access token : is used to communicate with github on behalf of the user.
+
+refresh token : refreshes the access token when it expires.
+
+profile : data returned (name, id, email, username).
+
+done : auth successful returns done(null, user) if error return done(error, null).
+#######################################
+
+
+summary of the exact flow --> 
+
+
+1. The user clicks Login with GitHub on app’s login page.
+
+2. They are redirected to GitHub to authenticate.
+
+3. when the user authorizes the app, GitHub redirects back to /auth/github/callback with an access code.
+
+4. The callback function is triggered, where the GitHub profile is fetched and the user’s details are stored or updated in the database.
+
+5. If the authentication is successful, the user is logged in and their details are available in your application.
+
+
+
+----> same goes for google

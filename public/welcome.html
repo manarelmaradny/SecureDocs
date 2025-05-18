@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecureDocs - Cyber Security</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    
+    body, html {
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(10, 25, 47, 0.9), rgba(5, 15, 35, 0.95)),
+        linear-gradient(135deg, #0a192f, #112240);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Space Mono', monospace;
+      color: #e6f1ff;
+    }
+
+    .container {
+      text-align: center;
+      user-select: none;
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #ff5555;
+      opacity: 0;
+      transform: translateY(-50px);
+      animation: slideDownFadeIn 1s forwards;
+      text-shadow: 0 0 15px rgba(255, 85, 85, 0.5);
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-top: 15px;
+      color: #8be9fd;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      animation-delay: 1.2s;
+      line-height: 1.6;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cyber-subtext {
+      display: block;
+      font-size: 0.9rem;
+      color: #6272a4;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .buttons {
+      margin-top: 50px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      animation-delay: 2.4s;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: linear-gradient(135deg, rgba(255, 85, 85, 0.2), rgba(139, 233, 253, 0.1));
+      border: 1px solid #ff5555;
+      color: #f8f8f2;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 14px 36px;
+      border-radius: 0;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    #signupBtn {
+      border-color: #8be9fd;
+      background: linear-gradient(135deg, rgba(139, 233, 253, 0.2), rgba(255, 85, 85, 0.1));
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, rgba(255, 85, 85, 0.3), rgba(139, 233, 253, 0.2));
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(255, 85, 85, 0.4);
+    }
+
+    #signupBtn:hover {
+      box-shadow: 0 6px 25px rgba(139, 233, 253, 0.4);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    /* Cyber Elements */
+    .cyber-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 85, 85, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 85, 85, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      opacity: 0.5;
+    }
+
+    .binary-rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.1;
+      overflow: hidden;
+    }
+
+    .binary-digit {
+      position: absolute;
+      color: #50fa7b;
+      font-size: 1rem;
+      animation: fall linear infinite;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .hacker-icon {
+      position: absolute;
+      font-size: 8rem;
+      color: rgba(255, 85, 85, 0.05);
+      bottom: 10%;
+      right: 10%;
+      z-index: 1;
+    }
+
+    .shield-icon {
+      position: absolute;
+      font-size: 6rem;
+      color: rgba(139, 233, 253, 0.05);
+      top: 15%;
+      left: 15%;
+      z-index: 1;
+    }
+
+    .cyber-circle {
+      position: absolute;
+      border: 2px dashed rgba(255, 85, 85, 0.3);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      right: -150px;
+      animation: rotate 40s linear infinite;
+    }
+
+    .circle-2 {
+      width: 500px;
+      height: 500px;
+      bottom: -250px;
+      left: -250px;
+      animation: rotate 60s linear infinite reverse;
+    }
+
+    /* Transition Overlay - بسيط جدًا */
+    .transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a192f;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Animations */
+    @keyframes slideDownFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
+    /* Terminal Effect */
+    .terminal-line {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #50fa7b;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    .terminal-line::before {
+      content: '> ';
+    }
+
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #50fa7b;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.1rem;
+      }
+      
+      .buttons {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .hacker-icon, .shield-icon {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cyber Background Elements -->
+  <div class="cyber-grid"></div>
+  <div class="binary-rain" id="binaryRain"></div>
+  <div class="hacker-icon">👨‍💻</div>
+  <div class="shield-icon">🛡️</div>
+  <div class="cyber-circle circle-1"></div>
+  <div class="cyber-circle circle-2"></div>
+  <div class="terminal-line">Initializing secure connection<span class="terminal-cursor"></span></div>
+
+  <!-- Transition Overlay بسيط -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+
+  <div class="container">
+    <h1>Secure Docs<span class="cyber-subtext">v3.2.1</span></h1>
+    <h2>Military-grade encryption for your sensitive documents<br>
+    <span class="cyber-subtext">Protected against 99.9% of cyber attacks</span></h2>
+    <div class="buttons">
+      <button id="loginBtn"> Login</button>
+      <button id="signupBtn"> Signup</button>
+    </div>
+  </div>
+
+  <script>
+    // Create binary rain effect
+    const binaryRain = document.getElementById('binaryRain');
+    for (let i = 0; i < 50; i++) {
+      const digit = document.createElement('div');
+      digit.className = 'binary-digit';
+      digit.textContent = Math.random() > 0.5 ? '1' : '0';
+      digit.style.left = `${Math.random() * 100}%`;
+      digit.style.animationDuration = `${5 + Math.random() * 15}s`;
+      digit.style.animationDelay = `${Math.random() * 5}s`;
+      binaryRain.appendChild(digit);
+    }
+
+    // Terminal text effect
+    const terminalTexts = [
+      "Establishing secure connection...",
+      "Scanning for vulnerabilities...",
+      "Encrypting data channels...",
+      "Firewall active...",
+      "All systems secure..."
+    ];
+    const terminalLine = document.querySelector('.terminal-line');
+    let currentText = 0;
+    
+    function changeTerminalText() {
+      terminalLine.textContent = terminalTexts[currentText];
+      currentText = (currentText + 1) % terminalTexts.length;
+      setTimeout(changeTerminalText, 3000);
+    }
+    
+    setTimeout(changeTerminalText, 3000);
+
+    // Button interactions and page transitions
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const transitionOverlay = document.getElementById('transitionOverlay');
+
+    function navigateToPage(url) {
+      // Show transition overlay
+      transitionOverlay.style.opacity = '1';
+      
+      // Wait for transition to complete then navigate
+      setTimeout(() => {
+        window.location.href = url;
+      }, 400);
+    }
+
+    loginBtn.addEventListener('click', () => {
+      navigateToPage('login.html');
+    });
+
+    signupBtn.addEventListener('click', () => {
+      navigateToPage('signup.html');
+    });
+  </script>
+</body>
+</html>

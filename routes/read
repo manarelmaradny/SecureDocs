@@ -1,0 +1,16 @@
+2fa logic summary -->
+
+1. a shared secret is created and stores in the session temporarily in the form of base32 (encoded).
+2. then a otpauth url is built using speakeasy that contains info(secret, issuer) understandable for google authenticator.
+3. qr code is generated and scanned now a shared secret is established
+4. this shared secret is used to generate the codes by combining it with current time (secret+time).
+5. verification is done by prompting user to enter a code.
+6. then secret is now stored in database and is2FAenabled is set to true.
+
+
+
+
+
+
+
+
