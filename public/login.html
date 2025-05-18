@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecureDocs Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Space Mono', monospace;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(10, 25, 47, 0.9), rgba(5, 15, 35, 0.95)),
+        linear-gradient(135deg, #0a192f, #112240);
+      color: #e6f1ff;
+      overflow: hidden;
+    }
+
+    /* Cyber Background Elements */
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(255, 85, 85, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 85, 85, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      opacity: 0.5;
+    }
+
+    .binary-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.1;
+      overflow: hidden;
+    }
+
+    .binary-digit {
+      position: absolute;
+      color: #50fa7b;
+      font-size: 1rem;
+      animation: fall linear infinite;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .cyber-circle {
+      position: fixed;
+      border: 2px dashed rgba(255, 85, 85, 0.3);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      right: -150px;
+      animation: rotate 40s linear infinite;
+    }
+
+    .circle-2 {
+      width: 500px;
+      height: 500px;
+      bottom: -250px;
+      left: -250px;
+      animation: rotate 60s linear infinite reverse;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: rgba(10, 25, 47, 0.85);
+      width: 850px;
+      max-width: 100%;
+      display: flex;
+      border-radius: 5px;
+      box-shadow: 0 0 30px rgba(255, 85, 85, 0.2);
+      overflow: hidden;
+      border: 1px solid rgba(255, 85, 85, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .left-section {
+      width: 45%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+    }
+
+    .image-frame {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-right: 1px solid rgba(255, 85, 85, 0.2);
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .right-section {
+      padding: 50px;
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-section h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #ff5555;
+      margin-bottom: 6px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(255, 85, 85, 0.5);
+    }
+
+    .right-section h2 {
+      font-size: 22px;
+      font-weight: 400;
+      color: #8be9fd;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group .icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #6272a4;
+      pointer-events: none;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px 14px 50px;
+      border: 1px solid rgba(255, 85, 85, 0.3);
+      border-radius: 4px;
+      font-size: 15px;
+      color: #e6f1ff;
+      background-color: rgba(10, 25, 47, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .input-group input::placeholder {
+      color: #6272a4;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #ff5555;
+      box-shadow: 0 0 8px rgba(255, 85, 85, 0.6);
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #6272a4;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    .error-message {
+      color: #ff5555;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+      padding-left: 50px;
+    }
+
+    .options {
+      text-align: right;
+      margin-bottom: 30px;
+    }
+
+    .options a {
+      color: #6272a4;
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .options a:hover {
+      color: #ff5555;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(255, 85, 85, 0.2), rgba(139, 233, 253, 0.1));
+      color: #f8f8f2;
+      font-weight: 600;
+      font-size: 16px;
+      border: 1px solid #ff5555;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(135deg, rgba(255, 85, 85, 0.3), rgba(139, 233, 253, 0.2));
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(255, 85, 85, 0.4);
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .social-login {
+      margin-top: 35px;
+      text-align: center;
+    }
+
+    .social-login p {
+      font-size: 13px;
+      color: #6272a4;
+      margin-bottom: 18px;
+      letter-spacing: 1.2px;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-buttons a {
+      padding: 11px 26px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      min-width: 135px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .social-buttons a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+
+    .social-buttons a img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .social-buttons .google {
+      background: linear-gradient(135deg, rgba(219, 68, 55, 0.8), rgba(195, 59, 47, 0.8));
+      border: 1px solid rgba(219, 68, 55, 0.5);
+    }
+
+    .social-buttons .google:hover {
+      background: linear-gradient(135deg, rgba(219, 68, 55, 0.9), rgba(195, 59, 47, 0.9));
+    }
+
+    .social-buttons .github {
+      background: linear-gradient(135deg, rgba(59, 59, 59, 0.8), rgba(42, 42, 42, 0.8));
+      border: 1px solid rgba(59, 59, 59, 0.5);
+    }
+
+    .social-buttons .github:hover {
+      background: linear-gradient(135deg, rgba(59, 59, 59, 0.9), rgba(42, 42, 42, 0.9));
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 14px;
+      color: #8be9fd;
+      font-weight: 600;
+    }
+
+    .register a {
+      color: #ff5555;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .register a:hover {
+      color: #ff3333;
+      text-shadow: 0 0 10px rgba(255, 85, 85, 0.5);
+    }
+
+    /* Animations */
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .login-box {
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .left-section,
+      .right-section {
+        width: 100%;
+      }
+
+      .left-section {
+        border-radius: 5px 5px 0 0;
+      }
+
+      .image-frame {
+        border-radius: 5px 5px 0 0;
+        height: 200px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 85, 85, 0.2);
+      }
+
+      .right-section {
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .right-section h3 {
+        font-size: 24px;
+      }
+
+      .right-section h2 {
+        font-size: 18px;
+      }
+
+      .input-group input {
+        font-size: 14px;
+      }
+
+      .login-btn {
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      .social-buttons a {
+        font-size: 12px;
+        min-width: 100px;
+        padding: 10px 20px;
+      }
+
+      .register {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cyber Background Elements -->
+  <div class="cyber-grid"></div>
+  <div class="binary-rain" id="binaryRain"></div>
+  <div class="cyber-circle circle-1"></div>
+  <div class="cyber-circle circle-2"></div>
+
+  <div class="login-container">
+    <div class="login-box">
+      <div class="left-section">
+        <div class="image-frame">
+          <img src="login_iso.jpg" alt="login illustration" />
+        </div>
+      </div>
+      <div class="right-section">
+        <h3>SECURE ACCESS</h3>
+        <h2>HACKER LOGIN PORTAL</h2>
+        <form method="POST" action="/login" id="login-form" novalidate>
+          <div class="input-group">
+            <i class="fas fa-envelope icon"></i>
+            <input type="email" name="email" id="email" placeholder="Email address" required />
+            <div class="error-message" id="email-error">Please enter a valid email.</div>
+          </div>
+          <div class="input-group">
+            <i class="fas fa-lock icon"></i>
+            <input type="password" name="password" id="password" placeholder="Password" required />
+            <i class="fas fa-eye toggle-password" id="toggle-password"></i>
+          </div>
+
+          <div class="options">
+            <a href="forgot-password.html">FORGOT PASSWORD?</a>
+          </div>
+
+          <button type="submit" class="login-btn">AUTHENTICATE</button>
+
+          <div class="social-login">
+            <p>OR CONTINUE WITH</p>
+            <div class="social-buttons">
+              <a href="/auth/google" class="google" role="button">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google Icon" />
+                Google
+              </a>
+              <a href="/auth/github" class="github" role="button">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub Icon" />
+                GitHub
+              </a>
+            </div>
+          </div>
+        </form>
+        <p class="register">NEW TO SECUREDOCS? <a href="signup.html">CREATE AN ACCOUNT</a></p>
+      </div>
+    </div>
+  </div>
+
+     <script>
+    // Binary rain effect
+    const binaryRain = document.getElementById('binaryRain');
+    const totalDigits = 120;
+    for (let i = 0; i < 30; i++) {
+      const digit = document.createElement('div');
+      digit.className = 'binary-digit';
+      digit.textContent = Math.random() > 0.5 ? '1' : '0';
+      digit.style.left = `${Math.random() * 100}%`;
+      digit.style.animationDuration = `${2 + Math.random() * 3}s`;
+      digit.style.animationDelay = `${Math.random() * 5}s`;
+      binaryRain.appendChild(digit);
+    }
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    // Email validation and showing error message
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+
+    emailInput.addEventListener('input', () => {
+      if (emailInput.validity.valid) {
+        emailError.style.display = 'none';
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      if (!emailInput.validity.valid) {
+        emailError.style.display = 'block';
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
